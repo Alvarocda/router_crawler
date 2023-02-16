@@ -24,7 +24,7 @@ const List<String> routerBrands = <String>[
   'HewlettPackard',
   'Aruba',
   'Dell',
-  'Nokia',
+  // 'Nokia',
   'Avaya',
   'Synology',
   'Belkin',
