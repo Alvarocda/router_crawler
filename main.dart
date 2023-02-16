@@ -6,10 +6,16 @@ import 'brands.dart';
 import 'models.dart';
 
 void main() async {
-  print('hello World');
-
+  print('Lendo arquivos. Aguarde!');
+  int startedAt = DateTime.now().millisecondsSinceEpoch;
   String results = await crawlFolders(directory: Directory('./results'));
-  await File('results.csv').writeAsString(results);
+  File csvFile = await File('results.csv').writeAsString(results);
+  int endedAt = DateTime.now().millisecondsSinceEpoch;
+
+  int totalTime = endedAt - startedAt;
+  Duration duration = Duration(milliseconds: totalTime);
+  print('Leitura finalizada');
+  print('Duração: ${duration.inSeconds.toString().padLeft(2, '0')} segundos');
 }
 
 /// A recursive method to browse through all the folders, when it reaches the last level,
