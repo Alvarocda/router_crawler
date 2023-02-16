@@ -38,8 +38,10 @@ Future<String> crawlFolders({required Directory directory}) async {
 ///Iterates over the files inside the folder passed in the [directory] parameter and checks
 ///if it is a success or error file, if successful, it will parse the json and html
 ///
-Future<String> crawlFiles(
-    {required String ip, required Directory directory}) async {
+Future<String> crawlFiles({
+  required String ip,
+  required Directory directory,
+}) async {
   final List<FileSystemEntity> files = await directory.list().toList();
   StringBuffer stringBuffer = StringBuffer();
   for (int x = 0; x < files.length; x++) {
@@ -64,8 +66,10 @@ Future<String> crawlFiles(
 ///
 ///
 ///
-Future<String> parseSucessFile(
-    {required File jsonFile, required String filename}) async {
+Future<String> parseSucessFile({
+  required File jsonFile,
+  required String filename,
+}) async {
   filename = filename.replaceAll('.json', '');
   List<String> filenameParts = filename.split('_');
   String port = filenameParts[1];
@@ -80,8 +84,10 @@ Future<String> parseSucessFile(
 ///
 ///
 ///
-Future<String> parseRouterInfo(
-    {required File htmlFile, required File jsonFile}) async {
+Future<String> parseRouterInfo({
+  required File htmlFile,
+  required File jsonFile,
+}) async {
   String htmlFileData;
   String jsonString = await jsonFile.readAsString();
   try {
@@ -161,8 +167,10 @@ String getRouterModel({
 ///
 ///
 ///
-Future<String> parseErrorFile(
-    {required File file, required String filename}) async {
+Future<String> parseErrorFile({
+  required File file,
+  required String filename,
+}) async {
   filename = filename.replaceAll('.txt', '');
   List<String> filenameParts = filename.split('_');
   return 'ERRO,${filenameParts[1]},null,null,null';
