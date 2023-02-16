@@ -46,4 +46,5 @@ const List<String> routerBrands = <String>[
   'OpenMesh',
   'Cradlepoint',
   'Meraki',
+  'Multilaser',
 ];
