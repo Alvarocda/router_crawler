@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:developer' as dev;
 
 void main() async {
   print('hello World');
@@ -45,11 +44,10 @@ Future<String> crawlFiles({required String ip, required Directory directory}) as
         String parsedErrorFile = await parseErrorFile(file: files[x] as File, filename: filename);
         stringBuffer.writeln('${parsedErrorFile}');
       } else if (filename.contains('.json')){
-        String parsedJsonFile = await parseJsonFile(file: files[x] as File, filename: filename);
+        String parsedJsonFile = await parseSucessFile(file: files[x] as File, filename: filename);
         stringBuffer.writeln('${parsedJsonFile}');
       }else{
-        // parse Html FIle
-        stringBuffer.writeln('html');
+        continue;
       }
     }
     return stringBuffer.toString();
@@ -58,8 +56,15 @@ Future<String> crawlFiles({required String ip, required Directory directory}) as
 ///
 ///
 ///
-Future<String> parseJsonFile({required File file, required String filename}) async{
-  return 'JSON';
+Future<String> parseSucessFile({required File file, required String filename}) async{
+  filename = filename.replaceAll('.json', '');
+  List<String> filenameParts = filename.split('_');
+  String port = filenameParts[1];
+  String statusCode = filenameParts.last;
+  String sucess = 'SUCESSO,$port,$statusCode';
+
+
+  return sucess;
 }
 ///
 ///
@@ -67,16 +72,7 @@ Future<String> parseJsonFile({required File file, required String filename}) asy
 Future<String> parseErrorFile({required File file, required String filename})async{
   filename = filename.replaceAll('.txt', '');
   List<String> filenameParts = filename.split('_');
-  String exception = await parseExceptionMessage(file: file);
-  return 'ERRO,${filenameParts[1]},$exception';
-}
-
-///
-///
-///
-Future<String> parseExceptionMessage({required File file}) async{
-  String exceptionLine = await file.openRead().transform(utf8.decoder).transform(LineSplitter()).last;
-  return exceptionLine.split(' ').first.trim();
+  return 'ERRO,${filenameParts[1]},null,null,null';
 }
 
 
