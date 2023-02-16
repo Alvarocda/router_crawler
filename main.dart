@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:fast_gbk/fast_gbk.dart';
+
 List<String> routerBrands = <String>[
   'TP-Link',
   'TPLink'
-  'Xiaomi',
+      'Xiaomi',
   'Asus',
   'D-link',
   'DLink',
@@ -50,6 +52,13 @@ List<String> routerBrands = <String>[
   'Meraki',
 ];
 
+List<String> routerModels = <String>[
+  'GWR-1200AC',
+  'GWR1200AC',
+  'GWR-1200',
+  'GWR1200'
+];
+
 void main() async {
   print('hello World');
 
@@ -88,15 +97,16 @@ Future<String> crawlFiles(
   final List<FileSystemEntity> files = await directory.list().toList();
   StringBuffer stringBuffer = StringBuffer();
   for (int x = 0; x < files.length; x++) {
-    stringBuffer.write('${ip},');
     String filename = files[x].path.split('/').last;
     if (filename.contains('.txt')) {
+      stringBuffer.write('${ip},');
       String parsedErrorFile =
           await parseErrorFile(file: files[x] as File, filename: filename);
       stringBuffer.writeln('${parsedErrorFile}');
     } else if (filename.contains('.json')) {
+      stringBuffer.write('${ip},');
       String parsedJsonFile =
-          await parseSucessFile(file: files[x] as File, filename: filename);
+          await parseSucessFile(jsonFile: files[x] as File, filename: filename);
       stringBuffer.writeln('${parsedJsonFile}');
     } else {
       continue;
@@ -109,34 +119,97 @@ Future<String> crawlFiles(
 ///
 ///
 Future<String> parseSucessFile(
-    {required File file, required String filename}) async {
+    {required File jsonFile, required String filename}) async {
   filename = filename.replaceAll('.json', '');
   List<String> filenameParts = filename.split('_');
   String port = filenameParts[1];
   String statusCode = filenameParts.last;
   String sucess = 'SUCESSO,$port,$statusCode';
-  File indexFile = File('${file.parent.path}/index.html');
+  File indexFile = File('${jsonFile.parent.path}/index.html');
   String htmlFileData;
-  try{
-    String htmlFileData = await parseHtmlFile(file: indexFile);
-    return '${sucess},${htmlFileData}';
-  } catch(e){
-    return '$sucess,CORRUPTED_HTML, null';
-  }
+  htmlFileData = await parseRouterInfo(htmlFile: indexFile, jsonFile: jsonFile);
+  return '${sucess},${htmlFileData}';
 }
 
-Future<String> parseHtmlFile({required File file}) async {
-  String fileData = await file.readAsString();
-  String brand = 'UNKNOWN BRAND';
+///
+///
+///
+Future<String> parseRouterInfo(
+    {required File htmlFile, required File jsonFile}) async {
+  String htmlFileData;
+  String jsonString = await jsonFile.readAsString();
+  try {
+    htmlFileData = await htmlFile.readAsString();
+  } catch (e) {
+    try {
+      htmlFileData = await htmlFile.readAsString(encoding: gbk);
+    } catch (e) {
+      return 'CORRUPTED_HTML, null';
+    }
+  }
+  String brand =
+      getRouterBrand(indexHtmlString: htmlFileData, jsonString: jsonString);
+  String model =
+      getRouterModel(indexHtmlString: htmlFileData, jsonString: jsonString);
+  return '${brand},${model}';
+}
+
+///
+///
+///
+String getRouterBrand({
+  required String indexHtmlString,
+  required String jsonString,
+}) {
+  String brand = 'UNKNOWN_BRAND';
 
   routerBrands.any((element) {
-    if (fileData.toLowerCase().contains(element.toLowerCase())) {
+    if (jsonString.toLowerCase().contains(element.toLowerCase())) {
       brand = element;
       return true;
     }
     return false;
   });
-  return '${brand}';
+
+  if (brand == 'UNKNOWN_BRAND') {
+    routerBrands.any((element) {
+      if (indexHtmlString.toLowerCase().contains(element.toLowerCase())) {
+        brand = element;
+        return true;
+      }
+      return false;
+    });
+  }
+  return brand;
+}
+
+///
+///
+///
+String getRouterModel({
+  required String indexHtmlString,
+  required String jsonString,
+}) {
+  String model = 'UNKNOWN_MODEL';
+  routerModels.any((element) {
+    if (jsonString.toLowerCase().contains(element.toLowerCase())) {
+      model = element;
+      return true;
+    }
+    return false;
+  });
+
+  if (model == 'UNKNOWN_MODEL') {
+    routerModels.any((element) {
+      if (indexHtmlString.toLowerCase().contains(element.toLowerCase())) {
+        model = element;
+        return true;
+      }
+      return false;
+    });
+  }
+
+  return model;
 }
 
 ///

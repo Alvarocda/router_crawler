@@ -1,0 +1,6 @@
+name: router_crawler
+
+environment:
+  sdk: ">=2.19.0 <3.0.0"
+dependencies:
+  fast_gbk: ^1.0.0

@@ -1,0 +1,20 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "fast_gbk",
+      "rootUri": "file:///home/geia/.pub-cache/hosted/pub.dev/fast_gbk-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "router_crawler",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    }
+  ],
+  "generated": "2023-02-16T16:55:03.313377Z",
+  "generator": "pub",
+  "generatorVersion": "2.19.2"
+}
