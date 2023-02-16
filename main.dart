@@ -1,7 +1,4 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 
 List<String> routerBrands = <String>[
   'TP-Link',
@@ -21,7 +18,17 @@ List<String> routerBrands = <String>[
   'Atheros',
   'Cisco',
   'Tenda',
-
+  'Huawei',
+  'Zyxel',
+  'Juniper',
+  'HPE',
+  'Hewlett Packard',
+  'HewlettPackard',
+  'Aruba',
+  'Dell',
+  'Nokia',
+  'Avaya',
+  'Synology'
 ];
 
 void main() async {
