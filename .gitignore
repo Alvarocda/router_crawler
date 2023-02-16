@@ -3,3 +3,4 @@ results/*
 ./results
 .vscode
 .vscode/*
+results.csv

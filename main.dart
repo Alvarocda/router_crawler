@@ -28,14 +28,33 @@ List<String> routerBrands = <String>[
   'Dell',
   'Nokia',
   'Avaya',
-  'Synology'
+  'Synology',
+  'Belkin',
+  'Apple',
+  'Motorola',
+  'Ubiquiti',
+  'Arris',
+  'Buffalo',
+  'Draytek',
+  'Fortinet',
+  'Sophos',
+  'WatchGuard',
+  'Palo Alto Networks',
+  'PaloAltoNetworks',
+  'SonicWall',
+  'Ruckus',
+  'EnGenius',
+  'Open Mesh',
+  'OpenMesh',
+  'Cradlepoint',
+  'Meraki',
 ];
 
 void main() async {
   print('hello World');
 
   String results = await crawlFolders(directory: Directory('./results'));
-  print(results);
+  await File('results.csv').writeAsString(results);
 }
 
 /// A recursive method to browse through all the folders, when it reaches the last level,
