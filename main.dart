@@ -2,62 +2,8 @@ import 'dart:io';
 
 import 'package:fast_gbk/fast_gbk.dart';
 
-List<String> routerBrands = <String>[
-  'TP-Link',
-  'TPLink',
-  'Xiaomi',
-  'Asus',
-  'D-link',
-  'DLink',
-  'Intelbras',
-  'Greatek',
-  'MikroTik',
-  'Linksys',
-  'Google',
-  'Netgear',
-  'Amazon',
-  '3com',
-  'Atheros',
-  'Cisco',
-  'Tenda',
-  'Huawei',
-  'Zyxel',
-  'Juniper',
-  'HPE',
-  'Hewlett Packard',
-  'HewlettPackard',
-  'Aruba',
-  'Dell',
-  'Nokia',
-  'Avaya',
-  'Synology',
-  'Belkin',
-  'Apple',
-  'Motorola',
-  'Ubiquiti',
-  'Arris',
-  'Buffalo',
-  'Draytek',
-  'Fortinet',
-  'Sophos',
-  'WatchGuard',
-  'Palo Alto Networks',
-  'PaloAltoNetworks',
-  'SonicWall',
-  'Ruckus',
-  'EnGenius',
-  'Open Mesh',
-  'OpenMesh',
-  'Cradlepoint',
-  'Meraki',
-];
-
-List<String> routerModels = <String>[
-  'GWR-1200AC',
-  'GWR1200AC',
-  'GWR-1200',
-  'GWR1200'
-];
+import 'brands.dart';
+import 'models.dart';
 
 void main() async {
   print('hello World');
