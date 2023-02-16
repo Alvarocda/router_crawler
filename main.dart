@@ -4,8 +4,8 @@ import 'package:fast_gbk/fast_gbk.dart';
 
 List<String> routerBrands = <String>[
   'TP-Link',
-  'TPLink'
-      'Xiaomi',
+  'TPLink',
+  'Xiaomi',
   'Asus',
   'D-link',
   'DLink',
